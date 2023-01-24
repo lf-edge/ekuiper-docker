@@ -12,12 +12,12 @@ RUN curl --silent --show-error -kfL -o upx.tar.xz "https://github.com/upx/upx/re
 
 WORKDIR /go
 
-ENV VSN=1.7.4
+ENV VSN=1.8.0
 RUN curl --silent --show-error -kfL -o ekuiper.tar.gz "https://github.com/lf-edge/ekuiper/archive/refs/tags/${VSN}.tar.gz" && \
     mkdir -p ekuiper && \
     tar -zxf ekuiper.tar.gz -C ekuiper --strip-components 1 && \
     cd ekuiper && \
-    make build_with_edgex
+    make build_with_edgex_and_script
 
 FROM python:3.8.12-slim-bullseye
 
@@ -26,7 +26,7 @@ COPY --from=builder /go/ekuiper/sdk/python /sdk/python
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 
 RUN apt-get update --no-install-recommends && \
-    apt-get install -y --no-install-recommends pkg-config libczmq-dev wget cmake libffi-dev && \
+    apt-get install -y --no-install-recommends gcc pkg-config libczmq-dev libffi-dev wget cmake make git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

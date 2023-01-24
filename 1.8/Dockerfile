@@ -5,7 +5,7 @@ RUN apk add gcc make git libc-dev zip curl jq bash binutils-gold pkgconfig zerom
 
 WORKDIR /go
 
-ENV VSN=1.7.4
+ENV VSN=1.8.0
 RUN curl --silent --show-error -kfL -o ekuiper.tar.gz "https://github.com/lf-edge/ekuiper/archive/refs/tags/${VSN}.tar.gz" && \
     mkdir -p ekuiper && \
     tar -zxf ekuiper.tar.gz -C ekuiper --strip-components 1 && \
