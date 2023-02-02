@@ -1,4 +1,4 @@
-FROM golang:1.18.5 AS builder
+FROM golang:1.19 AS builder
 
 RUN apt update -y --no-install-recommends && \
     apt install -y --no-install-recommends make git curl procps zip libucl-dev zlib1g-dev pkg-config libczmq-dev build-essential debhelper jq zip
@@ -19,7 +19,7 @@ RUN curl --silent --show-error -kfL -o ekuiper.tar.gz "https://github.com/lf-edg
     cd ekuiper && \
     make build_with_edgex_and_script
 
-FROM python:3.8.12-slim-bullseye
+FROM python:3.8-slim-bullseye
 
 COPY --from=builder /go/ekuiper/_build/kuiper-* /kuiper/
 COPY --from=builder /go/ekuiper/sdk/python /sdk/python

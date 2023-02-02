@@ -1,4 +1,4 @@
-FROM golang:1.18.5-alpine AS builder
+FROM golang:1.19-alpine AS builder
 
 RUN apk add gcc make git libc-dev zip curl jq bash binutils-gold pkgconfig zeromq-dev && \
     mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
